@@ -14,15 +14,27 @@ export class Router {
                 }),
             }
         )
-        .get(
-            "/:id",
-            async ({ params }) => TicketController.getById({ id: Number(params.id) }),
-            {
-                params: t.Object({
-                    id: t.String(),
-                }),
-            }
-        )
+.get(
+    "/:id",
+    async ({ params, set }) => {
+        try {
+            return await TicketController.getById({
+                id: Number(params.id),
+            });
+        } catch (error) {
+            set.status = 404;
+
+            return {
+                error: "Билет не найден",
+            };
+        }
+    },
+    {
+        params: t.Object({
+            id: t.String(),
+        }),
+    }
+)
         .get("/", async () => TicketController.getAll())
         .delete(
             "/:id",

@@ -18,8 +18,10 @@
   },
   "devDependencies": {
     "@prisma/client": "^6.8.2",
+    "mock-require": "^3.0.3",
     "prisma": "^6.8.2",
     "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
     "typescript": "^5.8.3"
   }
 }

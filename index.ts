@@ -4,16 +4,13 @@ import { node } from "@elysiajs/node";
 import cors from "@elysiajs/cors";
 import { Router } from "./scr/routers/Router";
 
-class API {
-  private app = new Elysia({ adapter: node() });
+export class API {
+  public app = new Elysia({ adapter: node() });
 
   constructor() {
     dotenv.config();
     this.useMiddlewares();
     this.useRoutes();
-    this.init().then(() =>
-      console.log(`Server running at: ${process.env.PORT}`)
-    );
   }
 
   private useMiddlewares() {
@@ -25,8 +22,14 @@ class API {
   }
 
   async init() {
-    this.app.listen(process.env.PORT || 5000);
+    return this.app.listen(process.env.PORT || 5000);
   }
 }
 
-new API();
+if (require.main === module) {
+  const api = new API();
+
+  api.init().then(() =>
+    console.log(`Server running at: ${process.env.PORT || 5000}`)
+  );
+}
